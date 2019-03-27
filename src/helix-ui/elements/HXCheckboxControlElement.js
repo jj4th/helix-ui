@@ -13,6 +13,30 @@ export class HXCheckboxControlElement extends HXFormControlElement {
         return 'hx-checkbox-control';
     }
 
+    /** @override */
+    $onCreate () {
+        this._onCtrlBlur = this._onCtrlBlur.bind(this);
+        this._onCtrlChange = this._onCtrlChange.bind(this);
+    }
+
+    /** @override */
+    $onConnect () {
+        let ctrl = this.controlElement;
+        if (ctrl) {
+            ctrl.addEventListener('change', this._onCtrlChange);
+            ctrl.addEventListener('blur', this._onCtrlBlur);
+        }
+    }
+
+    /** @override */
+    $onDisconnect () {
+        let ctrl = this.controlElement;
+        if (ctrl) {
+            ctrl.removeEventListener('change', this._onCtrlChange);
+            ctrl.removeEventListener('blur', this._onCtrlBlur);
+        }
+    }
+
     /**
      * Fetch the first `<input type="checkbox">` descendant
      *
@@ -22,5 +46,17 @@ export class HXCheckboxControlElement extends HXFormControlElement {
      */
     get controlElement () {
         return this.querySelector('input[type="checkbox"]');
+    }
+
+    /** @private */
+    _onCtrlBlur () {
+        // communicate state via attribute
+        this.$defaultAttribute('hx-touched', '');
+    }
+
+    /** @private */
+    _onCtrlChange () {
+        // communicate state via attribute
+        this.$defaultAttribute('hx-changed', '');
     }
 }
