@@ -192,14 +192,22 @@ hx-checkbox-control {
   &[hx-touched] {
     > input[type="checkbox"]:invalid {
       ~ label > hx-checkbox {
-        border: 2px solid @red-900;
-        color: @red-900;
+        border: 2px solid lime;
+        color: purple;
+      }
+    }
+  }
+
+  .hxInvalid &,
+  &.hxInvalid {
+    > input[type="checkbox"] {
+      ~ label > hx-checkbox {
+        border: 2px solid orange;
+        color: blue;
       }
     }
   }
 }
-
-
 
 /* ========== DISABLED ========== */
 hx-checkbox-control > input[type="checkbox"]:disabled {
